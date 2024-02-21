@@ -7,8 +7,11 @@
 
 image="$1"
 echo "Building docker image: $image"
+PROFILE="$2"
+test="$3"
 
-test="$2"
+aws ecr-public get-login-password --region us-east-1 --profile $PROFILE  \
+	| docker login --username AWS --password-stdin public.ecr.aws
 
 jobexec=$test'2sl-job-exec'
 jobresources=$test'2sl-job-resources'
